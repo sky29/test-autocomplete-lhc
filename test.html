@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Autcomplete-lhc example for Medical Conditions</title>
+    <link href='https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/17.0.3/autocomplete-lhc.min.css' rel="stylesheet">
+  </head>
+
+  <body>
+    ICD-10: <input type="text" id="icd10" placeholder="icd10">
+
+    ICD-10 Code: <input type="text" id="icd10Code" placeholder="icd10Code">
+    ICD-10 Value: <input type="text" id="icd10Value" placeholder="icd10Value">
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- example CDN-- you may choose another source --> 
+    <script src='https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/17.0.3/autocomplete-lhc.min.js'></script>
+    <script>
+      new Def.Autocompleter.Search('icd10',
+        'https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name');
+        
+      Def.Autocompleter.Event.observeListSelections('icd10', function() {
+        var icd10Field = $('#icd10')[0];
+        var autocomp = icd10.autocomp;
+        var itemData = autocomp.getSelectedItemData();
+        //alert(JSON.stringify(itemData[0]));
+        $('#icd10Code')[0].value = itemData && itemData[0].code ? itemData[0].code  : '';
+        $('#icd10Value')[0].value = itemData && itemData[0].text ? itemData[0].text  : '';
+      });
+    </script>
+  </body>
+
+</html>
